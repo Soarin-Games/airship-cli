@@ -3,7 +3,7 @@ import { input, select, confirm } from '@inquirer/prompts';
 import { PrintHeader, PrintError, PrintTitle } from '../util/Styles.js';
 import { AirshipToken } from '../util/TokenManager.js';
 import type { AirshipGame } from "../AirshipTypes.js";
-import { StartTool } from "../index.js";
+import { StartTool } from "../cli.js";
 
 const apiMap = {
     "Slug": "https://api.airship.gg/content/games/slug/",

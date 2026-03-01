@@ -3,7 +3,7 @@ import chalk from "chalk";
 import { input, select, confirm } from '@inquirer/prompts';
 import { PrintHeader, PrintError, PrintTitle } from '../util/Styles.js';
 import { AirshipToken } from '../util/TokenManager.js';
-import { commandMap, commandList, StartTool } from "../index.js";
+import { commandMap, commandList, StartTool } from "../cli.js";
 
 export const helpCommand: CLICommand = {
     name: "help",
@@ -28,7 +28,7 @@ export const helpCommand: CLICommand = {
                         StartTool();
                     };
                 }, 0);
-                
+
                 return;
             };
         };

@@ -2,7 +2,10 @@
   "name": "airship-cli",
   "version": "1.0.0",
   "description": "A CLI Tool to interact with Airship's API endpoints.",
-  "main": "out/index.js",
+  "main": "out/cli.js",
+  "bin": {
+    "airship": "out/cli.js"
+  },
   "type": "module",
   "scripts": {
     "tsc": "tsc --w"

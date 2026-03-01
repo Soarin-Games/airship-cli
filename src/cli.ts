@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { input, select } from '@inquirer/prompts';
 import { PrintHeader, PrintError, PrintTitle } from './util/Styles.js';
 import { AirshipToken } from './util/TokenManager.js';
