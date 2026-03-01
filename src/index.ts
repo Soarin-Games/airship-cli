@@ -1,37 +1,43 @@
-import figlet from 'figlet';
-import chalk from 'chalk';
-import { input } from '@inquirer/prompts';
-import * as fs from 'fs';
-import type { AccountInfo } from './AirshipTypes.js';
+import { input, select } from '@inquirer/prompts';
+import { PrintHeader, PrintError, PrintTitle } from './util/Styles.js';
+import { AirshipToken } from './util/TokenManager.js';
+import { isInt16Array } from 'node:util/types';
+import { helpCommand } from './commands/help.js';
+import { fetchUserCommand } from './commands/FetchUser.js';
+import { fetchGameCommand } from './commands/FetchGame.js';
 
-const airshipAccountPath = process.env.APPDATA + `../../LocalLow/Easy/Airship/account.json`;
-let airshipRefreshToken: string;
-
-async function PrintHeader(message: string) {
-    const textArt = await figlet.text(message);
-    const coloredText = chalk.blue(textArt);
-
-    console.log(chalk.bold(coloredText));
+export const commandMap = {
+    "Help": helpCommand,
+    "Fetch User": fetchUserCommand,
+    "Fetch Game": fetchGameCommand
 };
 
-async function PrintError(message: string) {
-    const coloredText = chalk.red(message);
+export const commandList = [
+    "Help",
+    "Fetch User",
+    "Fetch Game"
+];
 
-    console.log(chalk.bold(coloredText));
-};
+PrintTitle();
 
-function FetchAirshipToken(): string {
-    const accountsFile = fs.readFileSync(airshipAccountPath);
-    if (!accountsFile) {
-        PrintError("No Airship Installation Found!");
+setTimeout(() => {
+    PromptCommand();
+}, 250);
 
-        process.exit(1);
+async function PromptCommand() {
+    const answer = await select({ message: "What would you like to do?", choices: commandList});
+
+    for (let command of Object.entries(commandMap)) {
+        const cmdName = command[0];
+        const cmdFunction = command[1];
+
+        if (answer === cmdName) {
+            PrintTitle();
+
+            setTimeout(() => {
+                cmdFunction.execute();
+            }, 250);
+            return;
+        };
     };
-
-    const jsonData: AccountInfo = JSON.parse(accountsFile.toString("utf8"));
-
-    return jsonData.refreshToken;
 };
-
-PrintHeader(`Airship CLI\n\n`);
-airshipRefreshToken = FetchAirshipToken();
