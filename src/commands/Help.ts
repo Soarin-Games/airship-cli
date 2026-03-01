@@ -1,9 +1,9 @@
 import type { CLICommand } from "./CommandTypes.js";
 import chalk from "chalk";
-import { input, select } from '@inquirer/prompts';
+import { input, select, confirm } from '@inquirer/prompts';
 import { PrintHeader, PrintError, PrintTitle } from '../util/Styles.js';
 import { AirshipToken } from '../util/TokenManager.js';
-import { commandMap, commandList } from "../index.js";
+import { commandMap, commandList, StartTool } from "../index.js";
 
 export const helpCommand: CLICommand = {
     name: "help",
@@ -20,6 +20,15 @@ export const helpCommand: CLICommand = {
                 console.log(`- Description: ${chalk.gray(command[1].description)}`);
                 console.log(`- Usage: ${chalk.gray(command[1].usage)}`);
                 console.log(`\n`);
+
+                setTimeout(async () => {
+                    const restartTool = await confirm({ message: "Would you like to anything else?" });
+
+                    if (restartTool) {
+                        StartTool();
+                    };
+                }, 0);
+                
                 return;
             };
         };

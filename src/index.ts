@@ -18,11 +18,15 @@ export const commandList = [
     "Fetch Game"
 ];
 
-PrintTitle();
+export function StartTool() {
+    PrintTitle();
 
-setTimeout(() => {
-    PromptCommand();
-}, 250);
+    setTimeout(() => {
+        PromptCommand();
+    }, 250);
+};
+
+StartTool();
 
 async function PromptCommand() {
     const answer = await select({ message: "What would you like to do?", choices: commandList});
